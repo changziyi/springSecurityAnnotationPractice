@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	  http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	<mvc:annotation-driven />
+	<context:component-scan
+		base-package="com" />
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- i think: 會自動補在導入的內部資源示圖路徑的頭尾 -->
+		<property name="prefix" value="/demoView/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+<!-- 	<mvc:default-servlet-handler /> -->
+	<!-- 兩星號為目錄與子目錄 -->
+	<!-- seems double stars can't be applied to location attribute -->
+	<!-- 傳統的靜態資源只能放在容器的根目錄下，<mvc:resources />跨越了此限制。 -->
+	<!-- <mvc:resources />依据当前著名的Page Speed、YSlow等浏览器优化原则对静态资源提供优化 -->
+	<!-- 在输出静态资源时，会根据配置设置好响应报文头的Expires 和 Cache-Control值。 -->
+	<!-- 在接收到静态资源的获取请求时，会检查请求头的Last-Modified值，如果静态资源没有发生变化，
+	则直接返回303相应状态码，提示客户端使用浏览器缓存的数据，
+	而非将静态资源的内容输出到客户端，以充分节省带宽，提高程序性能。 -->
+	<mvc:resources location="/css/" mapping="/style/**" />
+	<mvc:resources location="/js/" mapping="/js/**" />
+	<mvc:resources location="/com/" mapping="/com/**" />
+	<!-- classpath*:的出现是为了从多个jar文件中加载相同的文件.classpath:只能加载找到的第一个文件. -->
+<!-- 	<bean -->
+<!-- 		class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor" /> -->
+</beans>
